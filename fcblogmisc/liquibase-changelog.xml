@@ -1,0 +1,154 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet author="???" id="add-table-bgo-user">
+        <createTable tableName="bgo_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"  primaryKeyName="bgo_userPK" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(300)"/>
+            <column name="password" type="varchar(300)"/>
+            <column name="phone" type="varchar(50)"/>
+            <column name="nickname" type="varchar(50)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="reg_date" type="datetime"/>
+        </createTable>
+
+    </changeSet>
+
+
+<changeSet author="???" id="addUniqueConstraint-user-name">
+    <addUniqueConstraint
+            columnNames="username"
+            constraintName="uniq_username"
+            deferrable="true"
+            disabled="true"
+            initiallyDeferred="true"
+            tableName="bgo_user"/>
+</changeSet>
+<changeSet author="???" id="addUniqueConstraint-user-phone">
+    <addUniqueConstraint
+            columnNames="phone"
+            constraintName="bgo_user_uniq_phone"
+            deferrable="true"
+            disabled="true"
+            initiallyDeferred="true"
+            tableName="bgo_user"/>
+</changeSet>
+<changeSet author="???" id="addUniqueConstraint-user-email">
+    <addUniqueConstraint
+            columnNames="email"
+            constraintName="bgo_user_uniq_email"
+            deferrable="true"
+            disabled="true"
+            initiallyDeferred="true"
+            tableName="bgo_user"/>
+</changeSet>
+
+
+
+    <changeSet author="???" id="add-table-bgo-media">
+            <createTable tableName="bgo_media">
+                <column autoIncrement="true" name="id" type="BIGINT">
+                    <constraints primaryKey="true"  primaryKeyName="bgo_mediaPK" nullable="false"/>
+                </column>
+                <column name="name" type="varchar(300)"/>
+                <column name="type" type="varchar(50)"/>
+                <column name="created_by" type="BIGINT(20)">
+                  <constraints nullable="true" foreignKeyName="fk_media2user_uid" references="bgo_user(id)"/>
+                </column>
+                <column name="created_at" type="datetime"/>
+            </createTable>
+    </changeSet>
+
+    <changeSet author="???" id="addUniqueConstraint-for-media-name">
+        <addUniqueConstraint
+                             columnNames="name"
+                             constraintName="uniqui_name4media"
+                             tableName="bgo_media"/>
+    </changeSet>
+
+
+    <changeSet author="???" id="add-table-bgo-category">
+            <createTable tableName="bgo_category">
+                <column autoIncrement="true" name="id" type="BIGINT">
+                    <constraints primaryKey="true"  primaryKeyName="bgo_categoryPK" nullable="false"/>
+                </column>
+                <column name="name" type="varchar(300)"/>
+                <column name="parent_id" type="bigint">
+                   <constraints nullable="true" foreignKeyName="fk_self_category_ref" references="bgo_category(id)"/>
+                </column>
+            </createTable>
+    </changeSet>
+
+    <changeSet author="???" id="add-table-bgo-post">
+        <createTable tableName="bgo_post">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"  primaryKeyName="bgo_postPK" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(300)"/>
+            <column name="content" type="MEDIUMTEXT"/>
+            <column name="category_id" type="bigint">
+              <constraints nullable="true" foreignKeyName="fk_post_category_id" references="bgo_category(id)"/>
+            </column>
+            <column name="user_id" type="BIGINT(20)">
+              <constraints nullable="true" foreignKeyName="fk_post2user_uid" references="bgo_user(id)"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="???" id="addUniqueConstraint-category-name">
+    <addUniqueConstraint
+            columnNames="name"
+            constraintName="uniq_bgo_category_name"
+            deferrable="true"
+            disabled="true"
+            initiallyDeferred="true"
+            tableName="bgo_category"/>
+    </changeSet>
+
+
+
+    <changeSet author="???" id="dropForeignKeyConstraint-parentidtoself">
+        <dropForeignKeyConstraint baseTableName="bgo_category" constraintName="fk_self_category_ref"/>
+    </changeSet>
+
+
+
+    <changeSet author="???" id="dropColumn-parentid">
+       <dropColumn
+            columnName="parent_id"
+            tableName="bgo_category"/>
+    </changeSet>
+
+
+
+    <changeSet author="???" id="addColumn-add-soft-delete-for-post">
+       <addColumn tableName="bgo_post">
+         <column name="is_deleted" type="tinyint"/>
+       </addColumn>
+    </changeSet>
+
+    <changeSet author="???" id="add-table-bgo-post-comment">
+        <createTable tableName="bgo_post_comment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"  primaryKeyName="bgo_postcommentPK" nullable="false"/>
+            </column>
+            <column name="commenter" type="varchar(50)"/>
+            <column name="comment_content" type="TEXT"/>
+            <column name="comment_time" type="datetime"/>
+            <column name="post_id" type="bigint">
+              <constraints nullable="true" foreignKeyName="fk_post_comment_post_id" references="bgo_post(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="???" id="addColumn-add-comment-read">
+       <addColumn tableName="bgo_post_comment">
+         <column name="read" type="tinyint"/>
+       </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

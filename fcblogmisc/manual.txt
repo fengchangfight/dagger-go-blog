@@ -1,0 +1,10 @@
+the way to run liquibase:
+liquibase --driver=com.mysql.jdbc.Driver \
+		 				--classpath=.:mysql-connector-java-8.0.11.jar \
+		 		 --changeLogFile=./liquibase-changelog.xml \
+		 		 --url="jdbc:mysql://localhost:3306/fc_blog_go" \
+		 		 --username=*** \
+		 		 --password=*** \
+		 		 update
+
+
