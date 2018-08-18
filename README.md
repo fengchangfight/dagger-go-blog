@@ -1,5 +1,5 @@
 # dagger-go-blog
-一个用golang和vuejs(nuxt.js)实现的博客系统，轻快，简洁，实例：www.fengchang.cc
+一个用golang和vuejs(nuxt.js)实现的博客系统，轻快，简洁，对会编程的人来说，高度可定制，实例：www.fengchang.cc
 
 ## 说明
 ### 架构
