@@ -11,4 +11,4 @@
 如想直接代码拉下来就跑恐怕不行，不过，照着出错提示一步步调试（少了什么文件就加，哪个配置不对就改），应该很快能跑起来。毕竟这个代码我从头到尾写也只花了不到一周的业余时间。
 
 ### 数据库表
-如果你安装了liquibase，直接运行daggerblogmisc中的liquibase changelog文件，不懂Liquibase的可以学一下，用这个比直接运行sql文件建表容易。
+如果你安装了liquibase，直接运行daggerblogmisc中的liquibase-changelog.xml文件，不懂Liquibase的可以学一下，用这个比直接运行sql文件建表容易。
