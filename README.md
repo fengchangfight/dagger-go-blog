@@ -2,6 +2,7 @@
 一个用golang和vuejs(nuxt.js)实现的博客系统，轻快，简洁，对会编程的人来说，高度可定制，实例：www.fengchang.cc
 
 ## 说明
+### 我嫌wordpress太慢故而手写的这个，所以速度应该还是不错的。
 ### 架构
 前后端分离，所有组件：mysql, redis, nodejs环境（运行前端），golang
 
